@@ -1,4 +1,4 @@
-1) git clone project
+1) 'git clone' project
 2) Open Visual Studio 2022 and select the CGRA350-SlimeProject folder to open
 3) When the popup happens click 'Enable and set source directory'
 4) Open '/work' and select the CMakeLists file there
