@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\imgui\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{AAB37C1E-E281-304E-8A5D-CE9E899E5175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{36299700-A0A5-317F-87E4-B31418FAE7D1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

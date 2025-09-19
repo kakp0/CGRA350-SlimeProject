@@ -1,0 +1,14 @@
+﻿  context.c
+  init.c
+  input.c
+  monitor.c
+  wgl_context.c
+  win32_init.c
+  win32_monitor.c
+  win32_time.c
+  win32_tls.c
+  win32_window.c
+  window.c
+  winmm_joystick.c
+  Generating Code...
+  glfw.vcxproj -> C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\bin\Debug\glfw3.lib

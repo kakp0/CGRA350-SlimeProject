@@ -1,0 +1,10 @@
+^C:\USERS\GGPC\DOWNLOADS\CGRA350 GROUP PROJECT\CGRA350_GROUP_PROJECT\CGRA350_FRAMEWORK\WORK\EXT\GLEW-1.10.0\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/GGPC/Downloads/CGRA350 Group Project/CGRA350_Group_Project/CGRA350_Framework/work" "-BC:/Users/GGPC/Downloads/CGRA350 Group Project/CGRA350_Group_Project/CGRA350_Framework" --check-stamp-file "C:/Users/GGPC/Downloads/CGRA350 Group Project/CGRA350_Group_Project/CGRA350_Framework/ext/glew-1.10.0/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
