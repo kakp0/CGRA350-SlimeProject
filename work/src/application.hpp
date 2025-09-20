@@ -1,7 +1,8 @@
 #pragma once
 
 // std
-#include <memory> // ADDED: For std::unique_ptr
+#include <memory> 
+#include <chrono> 
 
 // glm
 #include <glm/glm.hpp>
@@ -11,8 +12,6 @@
 #include "opengl.hpp"
 #include "cgra/cgra_mesh.hpp"
 
-// FORWARD DECLARATION: This tells the compiler that a class named "SlimeBlock" exists,
-// without needing to include the full header. This is key to breaking the dependency.
 class SlimeBlock;
 
 // Basic model that holds the shader, mesh and transform for drawing.
@@ -44,17 +43,27 @@ private:
 
 	// drawing flags
 	bool m_show_axis = false;
+	// CORRECTED: Grid is now off by default
 	bool m_show_grid = false;
 	bool m_showWireframe = false;
 
+	// Scene lighting
+	glm::vec3 m_light_pos{ 10, 10, 10 };
+
 	// geometry
-	// CHANGED: We now use a smart pointer to our forward-declared class.
 	std::unique_ptr<SlimeBlock> m_slimeBlock;
+	basic_model m_ground_model;
+
+	// Physics simulation timing
+	std::chrono::high_resolution_clock::time_point m_last_frame_time;
+	float m_time_accumulator = 0.0f;
+	const float m_fixed_time_step = 1.0f / 60.0f; // 60 physics steps per second
+	float m_delta_time = 0;
+	bool m_paused = false;
 
 public:
 	// setup
 	Application(GLFWwindow*);
-	// ADDED: A destructor is now required.
 	~Application();
 
 	// disable copy constructors (for safety)
