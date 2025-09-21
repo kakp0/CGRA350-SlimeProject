@@ -25,6 +25,15 @@ struct basic_model {
 	void draw(const glm::mat4& view, const glm::mat4 proj);
 };
 
+// *** ADDED *** Struct to hold information about a surface grab
+struct SurfaceGrab {
+	bool is_active = false;
+	int p_indices[3]{ -1, -1, -1 };
+	glm::vec3 bary_coords{ 0.0f };
+	glm::vec3 initial_hit_pos{ 0.0f };
+	glm::vec3 grab_plane_normal{ 0.0f };
+};
+
 // Main application class
 class Application {
 private:
@@ -41,9 +50,12 @@ private:
 	bool m_leftMouseDown = false;
 	glm::vec2 m_mousePosition;
 
+	// *** MODIFIED *** Input state for new surface interaction
+	bool m_rightMouseDown = false;
+	SurfaceGrab m_surface_grab;
+
 	// drawing flags
 	bool m_show_axis = false;
-	// CORRECTED: Grid is now off by default
 	bool m_show_grid = false;
 	bool m_showWireframe = false;
 
@@ -53,11 +65,12 @@ private:
 	// geometry
 	std::unique_ptr<SlimeBlock> m_slimeBlock;
 	basic_model m_ground_model;
+	basic_model m_grab_sphere_model;
 
 	// Physics simulation timing
 	std::chrono::high_resolution_clock::time_point m_last_frame_time;
 	float m_time_accumulator = 0.0f;
-	const float m_fixed_time_step = 1.0f / 60.0f; // 60 physics steps per second
+	const float m_fixed_time_step = 1.0f / 60.0f;
 	float m_delta_time = 0;
 	bool m_paused = false;
 

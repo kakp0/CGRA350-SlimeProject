@@ -18,6 +18,15 @@ struct DistanceConstraint {
     float rest_distance;
 };
 
+// *** MODIFIED *** Simplified the grab data; we no longer need to store original mass
+struct SurfaceGrabData {
+    bool is_active = false;
+    int p_indices[3]{ -1, -1, -1 };
+    glm::vec3 bary_coords{ 0.0f };
+    glm::vec3 target_pos{ 0.0f };
+};
+
+
 class SlimeBlock {
 private:
     // Simulation data
@@ -35,7 +44,6 @@ private:
     glm::vec3 m_gravity{ 0.0f, -9.81f, 0.0f };
     int m_solver_iterations = 5;
     float m_stiffness = 0.5f;
-    // CORRECTED: Hardcoded stable values and removed from GUI
     float m_volume_stiffness = 1.0f;
     float m_damping = 0.02f;
     float m_initial_volume = 0.0f;
@@ -54,6 +62,9 @@ private:
     bool m_rainbow_mode = false;
     float m_rainbow_time = 0.0f;
 
+    // Interaction state
+    SurfaceGrabData m_surface_grab_data;
+
     // Private methods
     void projectConstraints();
     void updateMesh();
@@ -66,11 +77,23 @@ public:
     void draw(const glm::mat4& view, const glm::mat4& proj, const glm::vec3& view_pos, const glm::vec3& light_pos);
     void reset();
 
-    // Getters for GUI - simplified
+    // Methods for new surface interaction
+    bool findClosestTriangle(const glm::vec3& ray_origin, const glm::vec3& ray_dir, int& tri_idx, glm::vec3& hit_pos, glm::vec3& bary_coords);
+    void grabSurface(int p_idx0, int p_idx1, int p_idx2, const glm::vec3& barycentric_coords);
+    void dragSurface(const glm::vec3& new_target_pos);
+    void releaseSurface();
+
+    // Public getters for particles and indices
+    const Particle& getParticle(int index) const;
+    const std::vector<unsigned int>& getMeshIndices() const;
+
+
+    // Getters for GUI
     int* getSubdivisionsPtr() { return &m_subdivisions; }
     glm::vec3* getGravityPtr() { return &m_gravity; }
     int* getSolverIterationsPtr() { return &m_solver_iterations; }
     float* getStiffnessPtr() { return &m_stiffness; }
+    float* getDampingPtr() { return &m_damping; }
     float getInitialVolume() const { return m_initial_volume; }
     float getCurrentVolume() const { return m_current_volume; }
     float getKineticEnergy() const { return m_kinetic_energy; }
