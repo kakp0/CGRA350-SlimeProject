@@ -1,7 +1,8 @@
 #pragma once
 
 // std
-#include <memory> // ADDED: For std::unique_ptr
+#include <memory>
+#include <chrono>
 
 // glm
 #include <glm/glm.hpp>
@@ -10,9 +11,8 @@
 // project
 #include "opengl.hpp"
 #include "cgra/cgra_mesh.hpp"
+#include "ProceduralEnvironment.hpp"
 
-// FORWARD DECLARATION: This tells the compiler that a class named "SlimeBlock" exists,
-// without needing to include the full header. This is key to breaking the dependency.
 class SlimeBlock;
 
 // Basic model that holds the shader, mesh and transform for drawing.
@@ -24,6 +24,15 @@ struct basic_model {
     GLuint texture;
 
     void draw(const glm::mat4& view, const glm::mat4 proj);
+};
+
+// Struct to hold information about a surface grab
+struct SurfaceGrab {
+    bool is_active = false;
+    int p_indices[3]{ -1, -1, -1 };
+    glm::vec3 bary_coords{ 0.0f };
+    glm::vec3 initial_hit_pos{ 0.0f };
+    glm::vec3 grab_plane_normal{ 0.0f };
 };
 
 // Main application class
@@ -40,24 +49,36 @@ private:
 
     // last input
     bool m_leftMouseDown = false;
+    bool m_rightMouseDown = false;
     glm::vec2 m_mousePosition;
+    SurfaceGrab m_surface_grab;
 
     // drawing flags
     bool m_show_axis = false;
     bool m_show_grid = false;
     bool m_showWireframe = false;
 
-    // geometry
-    // CHANGED: We now use a smart pointer to our forward-declared class.
-    std::unique_ptr<SlimeBlock> m_slimeBlock;
+    // Scene lighting
+    glm::vec3 m_light_pos{ 10, 10, 10 };
 
-    // procedural environment
-    std::unique_ptr<class ProceduralEnvironment> m_environment;
+    // geometry
+    std::unique_ptr<SlimeBlock> m_slimeBlock;
+    std::unique_ptr<ProceduralEnvironment> m_environment;
+    basic_model m_ground_model;
+    basic_model m_grab_sphere_model;
+
+    // Physics simulation timing
+    std::chrono::high_resolution_clock::time_point m_last_frame_time;
+    float m_time_accumulator = 0.0f;
+    const float m_fixed_time_step = 1.0f / 60.0f;
+    float m_delta_time = 0;
+    bool m_paused = false;
+
+    float m_grassContrast = 2.0f;
 
 public:
     // setup
     Application(GLFWwindow*);
-    // ADDED: A destructor is now required.
     ~Application();
 
     // disable copy constructors (for safety)

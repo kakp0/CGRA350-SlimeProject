@@ -1,42 +1,35 @@
 #pragma once
-
 #include <vector>
 #include <glm/glm.hpp>
 
 class PerlinNoise {
 public:
     // Constructor
-    PerlinNoise(unsigned int seed = 0);
+    PerlinNoise(unsigned int seed);
 
-    // Generate 2D Perlin noise
+    // Re-initialize with a new seed
+    void initialize(unsigned int seed);
+
+    // Noise functions
     float noise(float x, float y) const;
-    // ADDED: Generate 3D Perlin noise
     float noise(float x, float y, float z) const;
-
-    // Generate fractal noise by combining multiple octaves
     float fractalNoise(float x, float y, int octaves, float persistence, float scale) const;
 
-    // Generate 2D terrain height with configurable parameters
+    // Terrain specific functions
     float terrainHeight(float x, float y, float heightScale, float roughness) const;
-
-    // Generate mountain height with more dramatic variations
     float mountainHeight(float x, float y, float heightScale, float roughness) const;
 
-private:
-    // Permutation table for improved randomness
-    std::vector<int> p;
+    // NEW: Getters to allow the GPU to use the same noise data
+    const std::vector<int>& getPermutationTable() const { return p; }
+    const std::vector<glm::vec3>& getGradients() const { return gradients; }
 
-    // CHANGED: Gradient vectors are now 3D
+private:
+    std::vector<int> p;
     std::vector<glm::vec3> gradients;
 
-    // Helper functions
+    // Helper methods
     float fade(float t) const;
     float lerp(float a, float b, float t) const;
     float dotGridGradient(int ix, int iy, float x, float y) const;
-    // ADDED: 3D version of dotGridGradient
     float dotGridGradient(int ix, int iy, int iz, float x, float y, float z) const;
-
-
-    // Initialize the permutation table and gradients
-    void initialize(unsigned int seed);
 };
