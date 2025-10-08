@@ -1,0 +1,5 @@
+﻿  stb.c
+C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\stb\stb_image_write.h(210,8): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\stb\stb_image_write.h(372,8): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\stb\stb_image_write.h(702,8): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  stb.vcxproj -> C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\bin\Debug\stb.lib

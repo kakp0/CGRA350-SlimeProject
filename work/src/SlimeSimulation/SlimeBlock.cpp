@@ -1,14 +1,15 @@
 #include "SlimeBlock.hpp"
+#include "ProceduralEnvironment.hpp" // Include the environment for collision checks
 #include "cgra/cgra_shader.hpp"
+#include "BlockTypes.hpp" // Include to get BlockID enum
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp> 
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <numeric>
-#include <cmath> 
-#include <limits> 
+#include <cmath>
+#include <limits>
 
 SlimeBlock::SlimeBlock() {
-    // Build the shader
     cgra::shader_builder sb;
     sb.set_shader(GL_VERTEX_SHADER, CGRA_SRCDIR + std::string("/res/shaders/color_vert.glsl"));
     sb.set_shader(GL_FRAGMENT_SHADER, CGRA_SRCDIR + std::string("/res/shaders/color_frag.glsl"));
@@ -106,7 +107,7 @@ void SlimeBlock::reset() {
     m_initial_volume = std::abs(calculateCurrentVolume(false));
 }
 
-void SlimeBlock::update(float deltaTime) {
+void SlimeBlock::update(float deltaTime, ProceduralEnvironment& environment) {
     if (m_rainbow_mode) {
         m_rainbow_time += deltaTime;
         m_color = glm::vec4(sin(m_rainbow_time * 0.5f) * 0.5f + 0.5f, sin(m_rainbow_time * 0.5f + 2.0f) * 0.5f + 0.5f, sin(m_rainbow_time * 0.5f + 4.0f) * 0.5f + 0.5f, 0.5f);
@@ -124,10 +125,9 @@ void SlimeBlock::update(float deltaTime) {
         }
     }
 
-    projectConstraints();
+    projectConstraints(environment);
 
     for (auto& p : m_particles) {
-        // *** MODIFIED *** Also update position for grabbed particles, even if inverse_mass is 0
         if (m_surface_grab_data.is_active && (
             &p == &m_particles[m_surface_grab_data.p_indices[0]] ||
             &p == &m_particles[m_surface_grab_data.p_indices[1]] ||
@@ -184,14 +184,14 @@ float SlimeBlock::calculateCurrentVolume(bool use_predicted_pos) const {
     return volume / 6.0f;
 }
 
-void SlimeBlock::projectConstraints() {
+void SlimeBlock::projectConstraints(ProceduralEnvironment& environment) {
     float effective_stiffness = glm::clamp(m_stiffness * (m_subdivisions + 1.0f), 0.0f, 1.0f);
     float k_prime = 1.0f - pow(1.0f - effective_stiffness, 1.0f / m_solver_iterations);
 
     float volume_k_prime = 1.0f - pow(1.0f - m_volume_stiffness, 1.0f / m_solver_iterations);
 
     for (int iter = 0; iter < m_solver_iterations; ++iter) {
-        // *** ADDED *** Apply the surface grab as a soft constraint inside the solver loop
+        // Apply grab constraints
         if (m_surface_grab_data.is_active) {
             Particle& p0 = m_particles[m_surface_grab_data.p_indices[0]];
             Particle& p1 = m_particles[m_surface_grab_data.p_indices[1]];
@@ -257,8 +257,20 @@ void SlimeBlock::projectConstraints() {
             }
         }
 
-        // Ground collision
+        // --- REVISED COLLISION LOGIC ---
         for (auto& p : m_particles) {
+            // Check for collision with the environment
+            BlockID block = environment.getBlockAtWorldPos(p.predicted_position);
+
+            // If the block is solid (not Air or Glass)
+            if (block != BlockID::Air && block != BlockID::Glass) {
+                // This is a simple but effective response:
+                // Stop the particle by resetting its predicted position to its last known good position.
+                p.predicted_position = p.position;
+                continue; // Skip the ground plane check if we already collided
+            }
+
+            // Fallback Ground collision
             if (p.predicted_position.y < m_ground_level) {
                 p.predicted_position.y = m_ground_level;
             }
@@ -340,7 +352,6 @@ bool SlimeBlock::findClosestTriangle(const glm::vec3& ray_origin, const glm::vec
     return found_intersection;
 }
 
-// *** MODIFIED *** No longer changes inverse mass.
 void SlimeBlock::grabSurface(int p_idx0, int p_idx1, int p_idx2, const glm::vec3& barycentric_coords) {
     m_surface_grab_data.is_active = true;
     m_surface_grab_data.p_indices[0] = p_idx0;
@@ -355,12 +366,21 @@ void SlimeBlock::dragSurface(const glm::vec3& new_target_pos) {
     }
 }
 
-// *** MODIFIED *** No longer needs to restore inverse mass.
 void SlimeBlock::releaseSurface() {
     if (m_surface_grab_data.is_active) {
         m_surface_grab_data.is_active = false;
     }
 }
+
+// Moves all particles up by a fixed amount to get it unstuck from geometry.
+void SlimeBlock::unstuck() {
+    glm::vec3 up_vec(0.0f, 1.0f, 0.0f);
+    for (auto& p : m_particles) {
+        p.position += up_vec;
+        p.predicted_position += up_vec;
+    }
+}
+
 
 const Particle& SlimeBlock::getParticle(int index) const {
     return m_particles[index];
@@ -369,4 +389,3 @@ const Particle& SlimeBlock::getParticle(int index) const {
 const std::vector<unsigned int>& SlimeBlock::getMeshIndices() const {
     return m_mesh_indices;
 }
-
