@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\GGPC\Downloads\CGRA350 Group Project\CGRA350_Group_Project\CGRA350_Framework\work\ext\glew-1.10.0\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-</Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 
-// Defines all the unique block identifiers in a type-safe way.
+// Defines all the unique block identifiers 
 enum class BlockID : int {
     Air = 0,
     Grass = 1,
