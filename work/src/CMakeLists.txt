@@ -4,7 +4,7 @@
 file(GLOB_RECURSE SOURCES "*.cpp" "cgra/*.cpp")
 
 # Create the executable from the list of source files we just found.
-add_executable(base ${SOURCES})
+add_executable(base ${SOURCES} "PerlinNoise.cpp" "BlockMaterials.cpp")
 
 # Define CGRA_SRCDIR for the C++ code so it knows where to find files.
 target_compile_definitions(base PUBLIC "CGRA_SRCDIR=\"${PROJECT_SOURCE_DIR}\"")
