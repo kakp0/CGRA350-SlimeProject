@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "BlockTypes.hpp"
+// Made with the assistance of AI (Gemini 2.5 Pro)
+
 
 // A utility class to create and manage all block materials.
 class BlockMaterialRegistry {
