@@ -2,7 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include <random>
-
+// Made with the assistance of AI (Gemini 2.5 Pro)
 PerlinNoise::PerlinNoise(unsigned int seed) {
     initialize(seed);
 }
