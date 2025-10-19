@@ -7,6 +7,8 @@
 #include "PerlinNoise.hpp"
 #include "BlockTypes.hpp"
 
+// Made with the assistance of AI (Gemini 2.5 Pro)
+
 class SlimeBlock; // Forward-declaration to prevent circular header dependencies with SlimeBlock.hpp
 
 // Encapsulates all OpenGL objects needed to render the voxel world mesh.
