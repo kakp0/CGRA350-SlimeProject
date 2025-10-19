@@ -1,4 +1,5 @@
-#pragma once // Prevents the header from being included multiple times in a single compilation unit.
+#pragma once 
+// Made with the assistance of AI (Gemini 2.5 Pro)
 
 #include <vector>
 #include <glm/glm.hpp> // Using the GLM library for vector types, common in graphics programming.
