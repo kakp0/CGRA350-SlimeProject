@@ -14,7 +14,6 @@ target_compile_definitions(base PUBLIC GLEW_STATIC)
 
 
 # Link the compiled .lib files AND header-only targets to your executable.
-# FIX: Added 'glm' to this list. This is the critical change.
 target_link_libraries(base PUBLIC
     OpenGL::GL
     OpenMP::OpenMP_CXX
