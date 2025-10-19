@@ -13,6 +13,8 @@
 #include "cgra/cgra_wavefront.hpp"
 #include "SlimeSimulation/SlimeBlock.hpp"
 
+// Made with the assistance of AI (Gemini 2.5 Pro)
+
 using namespace std;
 using namespace cgra;
 using namespace glm;
