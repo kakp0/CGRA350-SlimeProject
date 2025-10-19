@@ -10,6 +10,8 @@
 #include "cgra/cgra_mesh.hpp"
 #include "ProceduralEnvironment.hpp"
 
+// Made with the assistance of AI (Gemini 2.5 Pro)
+
 class SlimeBlock; // Forward-declaration to avoid circular includes.
 
 // A simple aggregate of data for a renderable object.
