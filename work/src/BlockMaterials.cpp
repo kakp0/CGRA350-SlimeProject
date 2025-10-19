@@ -1,4 +1,5 @@
 #include "BlockMaterials.hpp"
+// Made with the assistance of AI (Gemini 2.5 Pro)
 
 // The following functions are simple factories for creating specific material types.
 // Each function instantiates a BlockMaterial struct and populates its fields with
