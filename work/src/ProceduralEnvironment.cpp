@@ -6,6 +6,8 @@
 #include <random>
 #include <glm/gtc/type_ptr.hpp>
 
+// Made with the assistance of AI (Gemini 2.5 Pro)
+
 bool Structure::loadFromFile(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
