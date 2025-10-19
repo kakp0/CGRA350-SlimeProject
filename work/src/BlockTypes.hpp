@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-
+// Made with the assistance of AI (Gemini 2.5 Pro)
 // Defines all the unique block identifiers 
 enum class BlockID : int {
     Air = 0,
